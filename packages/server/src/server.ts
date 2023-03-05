@@ -1,6 +1,8 @@
 import Fastify, { FastifyInstance, RouteShorthandOptions } from "fastify";
 import { Server, IncomingMessage, ServerResponse } from "http";
 
+import { getPageTitle } from "scraper";
+
 const server: FastifyInstance = Fastify({ logger: true });
 
 const opts: RouteShorthandOptions = {
@@ -19,7 +21,9 @@ const opts: RouteShorthandOptions = {
 };
 
 server.get("/ping", opts, async (request, reply) => {
-    return { pong: "it worked!" };
+    const title = await getPageTitle("https://www.google.com");
+    
+    return { pong: title };
 });
 
 const start = async () => {
