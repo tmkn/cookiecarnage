@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "rootDir": ".",
+        "strict": true,
+        "noImplicitOverride": true,
+        "outDir": "dist",
+        "sourceMap": true,
+        "lib": ["ESNext"],
+        "target": "es2020",
+        "module": "commonjs",
+        "declaration": true,
+        "declarationMap": true,
+        "isolatedModules": true
+    },
+    "include": ["src/**/*"],
+}
