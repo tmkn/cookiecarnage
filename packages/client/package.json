@@ -10,6 +10,7 @@
     "prettier": "prettier --write \"{src,tests,utility}/**/{*.ts,*.tsx,*.js,*.css}\""
   },
   "dependencies": {
+    "babylonjs": "^5.56.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
