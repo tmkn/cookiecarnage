@@ -5,12 +5,16 @@
         "noImplicitOverride": true,
         "outDir": "dist",
         "sourceMap": true,
-        "lib": ["ESNext", "DOM"],
+        "lib": ["ESNext", "DOM", "DOM.Iterable"],
         "target": "es2020",
         "module": "commonjs",
         "declaration": true,
         "declarationMap": true,
-        "isolatedModules": true
+        "isolatedModules": true,
+        // "skipLibCheck": true
     },
     "include": ["src/**/*"],
+    "exclude": [
+        "node_modules"
+    ],
 }
