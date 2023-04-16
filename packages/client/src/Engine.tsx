@@ -24,6 +24,17 @@ export const Engine: React.FC = () => {
             var createScene = function () {
                 // Create a basic BJS Scene object
                 var scene = new BABYLON.Scene(engine);
+
+                const framesPerSecond = 60;
+                const gravity = -9.81;
+                scene.gravity = new BABYLON.Vector3(0, gravity / framesPerSecond, 0);
+                scene.collisionsEnabled = true;
+
+                scene.onPointerDown = evt => {
+                    if (evt.button === 0) engine.enterPointerlock();
+                    if (evt.button === 1) engine.exitPointerlock();
+                };
+
                 // Create a FreeCamera, and set its position to {x: 0, y: 5, z: -10}
                 var camera = new BABYLON.FreeCamera(
                     "camera1",
@@ -34,6 +45,14 @@ export const Engine: React.FC = () => {
                 camera.setTarget(BABYLON.Vector3.Zero());
                 // Attach the camera to the canvas
                 camera.attachControl(canvas, false);
+                camera.applyGravity = true;
+                camera.checkCollisions = true;
+                camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
+                camera.minZ = 0.45;
+                camera.speed = 0.5;
+                camera.angularSensibility = 3000;
+                camera.inertia = 0.5;
+
                 // Create a basic light, aiming 0, 1, 0 - meaning, to the sky
                 var light = new BABYLON.HemisphericLight(
                     "light1",
@@ -48,12 +67,16 @@ export const Engine: React.FC = () => {
                 );
                 // Move the sphere upward 1/2 of its height
                 sphere.position.y = 1;
+                sphere.checkCollisions = true;
+
                 // Create a built-in "ground" shape;
                 var ground = BABYLON.MeshBuilder.CreateGround(
                     "ground1",
-                    { width: 6, height: 6, subdivisions: 2, updatable: false },
+                    { width: 60, height: 60, subdivisions: 2, updatable: false },
                     scene
                 );
+                ground.checkCollisions = true;
+
                 // Return the created scene
                 return scene;
             };
