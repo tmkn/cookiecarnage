@@ -1,26 +1,49 @@
+import { INode, createNode } from "./node";
+
 export interface IMineData {
     url: string;
     topTags: Array<[tag: string, i: number]>;
+    maxDepth: number;
+    maxWidth: number;
+    root: INode;
 }
+
+type QueueTuple = [Element, INode];
 
 export async function mine(): Promise<IMineData> {
     console.log(`hello from level-miner-entry`);
 
     const tags: Record<string, number> = {};
 
-    const root = document.body;
-    const queue: Element[] = [root];
+    const rootEl = document.body;
+    const queue: QueueTuple[] = [[rootEl, createNode(rootEl)]];
+    let [[, rootNode]] = queue;
+
+    let maxDepth = 0;
+    let maxWidth = 1;
 
     while (queue.length > 0) {
-        const element = queue.shift()!;
-        const tagName = element.tagName;
+        const [currentEl, currentNode] = queue.shift()!;
+        const tagName = currentEl.tagName;
+
+        maxDepth++;
+
         if (tags[tagName]) {
             tags[tagName]++;
         } else {
             tags[tagName] = 1;
         }
-        for (const child of element.children) {
-            queue.push(child);
+
+        for (const childEl of currentEl.children) {
+            // transform the htmlelement into a node
+            const childNode = createNode(childEl);
+
+            currentNode.children.push(childNode);
+            queue.push([childEl, childNode]);
+
+            if (maxWidth < queue.length) {
+                maxWidth = queue.length;
+            }
         }
     }
 
@@ -30,6 +53,9 @@ export async function mine(): Promise<IMineData> {
 
     return {
         url: window.location.href,
-        topTags: sorted
+        topTags: sorted,
+        maxDepth,
+        maxWidth,
+        root: rootNode
     };
 }

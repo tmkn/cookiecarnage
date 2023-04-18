@@ -6,9 +6,9 @@ import { runMiner } from "./index";
     const browser = await chromium.launch({
         headless: false
     });
-    const page = await browser.newPage();
+    const page = await browser.newPage({ bypassCSP: true });
 
-    const data = await runMiner(page, "https://news.ycombinator.com/");
+    const data = await runMiner(page, "https://motherfuckingwebsite.com/");
 
     console.log(data);
 
