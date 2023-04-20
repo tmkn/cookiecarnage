@@ -4,6 +4,9 @@ import * as path from "path";
 import { chromium, Page } from "playwright";
 import type { IMineData } from "./level-miner-entry";
 
+export type { INode } from "./node";
+export type { IMineData } from "./level-miner-entry";
+
 export async function getMineData(url: string): Promise<IMineData> {
     const browser = await chromium.launch();
     const page = await browser.newPage();
