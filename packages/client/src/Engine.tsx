@@ -103,11 +103,7 @@ export const Engine: React.FC = () => {
                     box.position = new BABYLON.Vector3(depth * scale, 0, i * scale);
                     box.checkCollisions = true;
                     const material = new BABYLON.StandardMaterial(`box-mat-${depth}-${i}`, scene);
-                    material.diffuseColor = new BABYLON.Color3(
-                        between(0, 255) / 255,
-                        between(0, 255) / 255,
-                        between(0, 255) / 255
-                    );
+                    material.diffuseColor = getColor(node.tagName);
                     box.material = material;
 
                     // const myDynamicTexture = new BABYLON.DynamicTexture(
@@ -143,7 +139,10 @@ export const Engine: React.FC = () => {
 
     useEffect(() => {
         (async () => {
-            const response = await fetch("/data");
+            const params = new URLSearchParams({
+                url: "https://www.google.com"
+            });
+            const response = await fetch(`/data?${params}`);
             const data = (await response.json()) as IMineData;
 
             setData(data);
@@ -180,4 +179,17 @@ const traverse = (node: INode, callback: (node: INode, depth: number, i: number)
         const children: [INode, number][] = node.children.map(child => [child, depth + 1]);
         queue.push(...children);
     }
+};
+
+const colors: Map<string, BABYLON.Color3> = new Map();
+
+const getColor = (tagName: string) => {
+    if (!colors.has(tagName)) {
+        colors.set(
+            tagName,
+            new BABYLON.Color3(between(0, 255) / 255, between(0, 255) / 255, between(0, 255) / 255)
+        );
+    }
+
+    return colors.get(tagName)!;
 };

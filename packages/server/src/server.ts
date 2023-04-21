@@ -23,7 +23,7 @@ const opts: RouteShorthandOptions = {
     }
 };
 
-server.get("/ping", opts, async (request, reply) => {
+server.get("/data", opts, async (request, reply) => {
     const { url = "https://www.google.com" } = request.query as { url?: string };
 
     const data = await getMineData(url);
