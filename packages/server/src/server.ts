@@ -7,6 +7,13 @@ const server: FastifyInstance = Fastify({ logger: true });
 
 const opts: RouteShorthandOptions = {
     schema: {
+        querystring: {
+            type: "object",
+            // required: ["url"],
+            properties: {
+                url: { type: "string" }
+            }
+        },
         response: {
             200: {
                 type: "object",
@@ -17,7 +24,9 @@ const opts: RouteShorthandOptions = {
 };
 
 server.get("/ping", opts, async (request, reply) => {
-    const data = await getMineData("https://www.google.com");
+    const { url = "https://www.google.com" } = request.query as { url?: string };
+
+    const data = await getMineData(url);
 
     return data;
 });
