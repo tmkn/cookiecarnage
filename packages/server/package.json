@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "fastify": "^4.15.0",
-    "miner": "*"
+    "miner": "*",
+    "undici": "^5.22.0"
   }
 }
