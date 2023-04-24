@@ -49,7 +49,7 @@ export const Engine: React.FC = () => {
                 camera.checkCollisions = true;
                 camera.ellipsoid = new BABYLON.Vector3(1, 1, 1);
                 camera.minZ = 0.45;
-                camera.speed = 0.5;
+                camera.speed = 25;
                 camera.angularSensibility = 3000;
                 camera.inertia = 0.5;
 
@@ -104,6 +104,20 @@ export const Engine: React.FC = () => {
                     box.checkCollisions = true;
                     const material = new BABYLON.StandardMaterial(`box-mat-${depth}-${i}`, scene);
                     material.diffuseColor = getColor(node.tagName);
+
+                    if (node.backgroundImg) {
+                        const params = new URLSearchParams({
+                            url: node.backgroundImg
+                        });
+                        const diffuseTexture = new BABYLON.Texture(
+                            `/proxy?${params}`
+                            // scene
+                        );
+
+                        console.log(`depth: ${depth} | i: ${i}`);
+                        material.diffuseTexture = diffuseTexture;
+                    }
+
                     box.material = material;
 
                     // const myDynamicTexture = new BABYLON.DynamicTexture(
@@ -127,7 +141,7 @@ export const Engine: React.FC = () => {
                     //     true
                     // );
 
-                    console.log(node.tagName, depth, i);
+                    // console.log(node.tagName, depth, i);
                 });
 
             return () => {
@@ -151,14 +165,7 @@ export const Engine: React.FC = () => {
         })();
     }, []);
 
-    return (
-        <canvas
-            ref={canvasRef}
-            id="canvas"
-            // width={document.documentElement.clientWidth}
-            // height={document.documentElement.clientHeight}
-        ></canvas>
-    );
+    return <canvas ref={canvasRef} id="canvas"></canvas>;
 };
 
 function between(min: number, max: number): number {
@@ -168,13 +175,17 @@ function between(min: number, max: number): number {
 const traverse = (node: INode, callback: (node: INode, depth: number, i: number) => void) => {
     let queue: [INode, number][] = [[node, 0]];
 
-    callback(node, 0, 0);
-
+    let i = 0;
+    let lastDepth = 0;
     while (queue.length > 0) {
         const [node, depth] = queue.shift()!;
 
-        // console.log(depth, node.tagName);
-        node.children.forEach((child, i) => callback(child, depth + 1, i));
+        if (depth > lastDepth) {
+            i = 0;
+            lastDepth = depth;
+        }
+
+        callback(node, depth, i++);
 
         const children: [INode, number][] = node.children.map(child => [child, depth + 1]);
         queue.push(...children);

@@ -49,7 +49,7 @@ export async function mine(): Promise<IMineData> {
 
     const sorted = Object.entries(tags).sort((a, b) => b[1] - a[1]);
 
-    // console.dir(sorted);
+    console.dir(rootNode);
 
     return {
         url: window.location.href,
