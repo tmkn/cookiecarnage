@@ -155,8 +155,8 @@ export const Engine: React.FC = () => {
         <canvas
             ref={canvasRef}
             id="canvas"
-            width={document.documentElement.clientWidth}
-            height={document.documentElement.clientHeight}
+            // width={document.documentElement.clientWidth}
+            // height={document.documentElement.clientHeight}
         ></canvas>
     );
 };
