@@ -4,6 +4,8 @@ import * as BABYLON from "babylonjs";
 import type { INode } from "miner";
 import { IMineData } from "miner/dist/src/level-miner-entry";
 
+let tagBillBoards: BABYLON.Mesh[] = [];
+
 export const Engine: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [data, setData] = useState<IMineData | null>(null);
@@ -120,29 +122,25 @@ export const Engine: React.FC = () => {
 
                     box.material = material;
 
-                    // const myDynamicTexture = new BABYLON.DynamicTexture(
-                    //     `texture-${depth}-${i}`,
-                    //     { with: 512, height: 512 },
-                    //     scene
-                    // );
-
-                    // const dynamicTextureContext = myDynamicTexture.getContext();
-
-                    // material.diffuseTexture = myDynamicTexture;
-
-                    // myDynamicTexture.drawText(
-                    //     node.tagName,
-                    //     10,
-                    //     10,
-                    //     "bold 36px Arial",
-                    //     "green",
-                    //     "white",
-                    //     true,
-                    //     true
-                    // );
-
-                    // console.log(node.tagName, depth, i);
+                    createTagBillboard(node.tagName, depth, i, scene);
                 });
+
+            scene.beforeCameraRender = () => {
+                tagBillBoards.forEach(billboard => {
+                    const distance = BABYLON.Vector3.Distance(
+                        scene.activeCamera!.position,
+                        billboard.position
+                    );
+
+                    if (distance > 50) billboard.isVisible = false;
+                    else billboard.isVisible = true;
+                });
+            };
+
+            scene.onDispose = () => {
+                console.log("Disposing scene...");
+                tagBillBoards = [];
+            };
 
             return () => {
                 scene.dispose();
@@ -203,4 +201,41 @@ const getColor = (tagName: string) => {
     }
 
     return colors.get(tagName)!;
+};
+
+const createTagBillboard = (tagName: string, x: number, z: number, scene: BABYLON.Scene) => {
+    const billboard = BABYLON.MeshBuilder.CreatePlane(`billboard-${tagName}`, {
+        width: 1,
+        height: 1
+    });
+    billboard.position = new BABYLON.Vector3(x * 5, 0.5, z * 5);
+    billboard.checkCollisions = true;
+    const material = new BABYLON.StandardMaterial(`billboard-mat-${tagName}`, scene);
+    material.diffuseColor = getColor(tagName);
+    billboard.material = material;
+    billboard.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+
+    tagBillBoards.push(billboard);
+
+    const myDynamicTexture = new BABYLON.DynamicTexture(
+        `texture-${tagName}`,
+        { width: 512, height: 512 },
+        scene
+    );
+
+    const dynamicTextureContext = myDynamicTexture.getContext();
+    (dynamicTextureContext as any).textAlign = "center";
+
+    material.diffuseTexture = myDynamicTexture;
+
+    myDynamicTexture.drawText(
+        tagName,
+        512 / 2,
+        512 / 2,
+        "bold 100px Arial",
+        "white",
+        "black",
+        true,
+        true
+    );
 };
