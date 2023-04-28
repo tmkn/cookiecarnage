@@ -98,6 +98,36 @@ export const MazeGen: React.FC = () => {
 
     useEffect(() => {
         if (app) {
+            // Set up the mouse events
+            let dragging = false;
+            let lastPosition = { x: 0, y: 0 };
+
+            if (app.view.addEventListener) {
+                app.view.addEventListener("mousedown", onMouseDown as any);
+                app.view.addEventListener("mousemove", onMouseMove as any);
+                app.view.addEventListener("mouseup", onMouseUp);
+
+                function onMouseDown(event: MouseEvent) {
+                    console.log(event);
+                    dragging = true;
+                    lastPosition = { x: event.clientX, y: event.clientY };
+                }
+
+                function onMouseMove(event: MouseEvent) {
+                    if (dragging) {
+                        const dx = event.clientX - lastPosition.x;
+                        const dy = event.clientY - lastPosition.y;
+                        app!.stage.position.x += dx;
+                        app!.stage.position.y += dy;
+                        lastPosition = { x: event.clientX, y: event.clientY };
+                    }
+                }
+
+                function onMouseUp() {
+                    dragging = false;
+                }
+            }
+
             // console.log("Creating maze...");
             // const container = new Container();
             // // Create a new Graphics object
@@ -161,7 +191,7 @@ const traverse = (node: IMineData, callback: (node: INode, x: number, y: number)
         for (let i = 0; i < queueLength; i++) {
             const node = queue.shift()!;
 
-            callback(node, i, depth);
+            callback(node, i, depth * 2);
 
             queue.push(...node.children);
         }
