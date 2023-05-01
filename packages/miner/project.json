@@ -1,0 +1,12 @@
+{
+    "targets": {
+        "preview": {
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["npm run build:watch", "npm run test"],
+                "cwd": "packages/miner"
+            },
+            "parallel": true
+        }
+    }
+}

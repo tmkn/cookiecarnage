@@ -4,8 +4,14 @@
 
 > A Doom inspired browser game where levels are auto generated based on a websites content
 
-## Run server
+## Run game (App, Miner Server)
 
 ```
 npx nx run-many --target=dev
+```
+
+## Preview Miner
+
+```
+npx nx run miner:preview
 ```
