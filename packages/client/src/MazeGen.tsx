@@ -3,6 +3,7 @@ import { Application, Graphics, Text, Container, utils } from "pixi.js";
 
 import "./index.css";
 import { IMineData, INode } from "miner";
+import { Pathfinder, Point } from "./AStar";
 
 export const MazeGen: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -170,6 +171,55 @@ export const MazeGen: React.FC = () => {
             //     app.stage.scale.y += delta;
             // });
         }
+
+        const obstacles: Point[] = [
+            {
+                x: 5,
+                y: 1
+            },
+            {
+                x: 5,
+                y: 2
+            },
+            {
+                x: 5,
+                y: 3
+            },
+            {
+                x: 5,
+                y: 4
+            },
+            {
+                x: 5,
+                y: 5
+            },
+            {
+                x: 5,
+                y: 5
+            },
+            {
+                x: 5,
+                y: 6
+            },
+            {
+                x: 5,
+                y: 7
+            },
+            {
+                x: 5,
+                y: 8
+            },
+            {
+                x: 5,
+                y: 9
+            }
+        ];
+        const pathfinder = Pathfinder.CREATE_GRID(10, 10, obstacles);
+        const path = pathfinder.findPath({ x: 0, y: 0 }, { x: 9, y: 9 });
+
+        pathfinder.printPath(path);
+        // console.dir(path);
+        // console.table(pathfinder.getGrid());
 
         return () => {
             // app?.destroy();
