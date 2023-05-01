@@ -11,7 +11,8 @@
         "declaration": true,
         "declarationMap": true,
         "isolatedModules": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "skipLibCheck": true
     },
     "include": ["src/**/*"],
 }

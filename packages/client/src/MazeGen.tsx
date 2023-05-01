@@ -33,7 +33,7 @@ export const MazeGen: React.FC = () => {
             // })();
 
             const params = new URLSearchParams({
-                url: "https://www.google.com"
+                url: "https://motherfuckingwebsite.com/"
             });
             fetch(`/data?${params}`)
                 .then(response => response.json())
