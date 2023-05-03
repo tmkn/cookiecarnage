@@ -1,4 +1,5 @@
 import Fastify, { FastifyInstance, RouteShorthandOptions } from "fastify";
+import { Client } from "undici";
 import { Server, IncomingMessage, ServerResponse } from "http";
 
 import { getMineData } from "miner";
@@ -7,6 +8,13 @@ const server: FastifyInstance = Fastify({ logger: true });
 
 const opts: RouteShorthandOptions = {
     schema: {
+        querystring: {
+            type: "object",
+            // required: ["url"],
+            properties: {
+                url: { type: "string" }
+            }
+        },
         response: {
             200: {
                 type: "object",
@@ -16,10 +24,28 @@ const opts: RouteShorthandOptions = {
     }
 };
 
-server.get("/ping", opts, async (request, reply) => {
-    const data = await getMineData("https://www.google.com");
+server.get("/data", opts, async (request, reply) => {
+    const { url = "https://www.google.com" } = request.query as { url?: string };
+
+    const data = await getMineData(url);
 
     return data;
+});
+
+server.get("/proxy", opts, (request, reply) => {
+    const { url: urlParam = "https://www.google.com" } = request.query as { url?: string };
+
+    const url = new URL(urlParam);
+    const client = new Client(`${url.origin}`);
+
+    client.stream(
+        {
+            path: `${url.pathname}${url.search}`,
+            method: "GET",
+            opaque: reply
+        },
+        ({ opaque }) => (opaque as any).raw
+    );
 });
 
 const start = async () => {

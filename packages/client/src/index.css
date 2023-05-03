@@ -1,4 +1,19 @@
-:root {
+body {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+#canvas {
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    font-size: 0;
+}
+
+/* :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
@@ -66,4 +81,4 @@ button:focus-visible {
     button {
         background-color: #f9f9f9;
     }
-}
+} */
