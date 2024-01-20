@@ -1,16 +1,19 @@
 {
-  "name": "cookiecarnage",
-  "version": "0.0.0",
-  "license": "ISC",
-  "scripts": {},
-  "private": true,
-  "dependencies": {},
-  "devDependencies": {
-    "nx": "15.9.2",
-    "prettier": "^2.8.7",
-    "typescript": "^5.0.4"
-  },
-  "workspaces": [
-    "packages/*"
-  ]
+    "name": "cookiecarnage",
+    "version": "0.0.0",
+    "license": "ISC",
+    "scripts": {
+        "start": "npx nx run-many -t dev"
+    },
+    "private": true,
+    "dependencies": {},
+    "devDependencies": {
+        "nodemon": "^3.0.3",
+        "nx": "17.2.8",
+        "prettier": "^3.2.4",
+        "typescript": "^5.3.3"
+    },
+    "workspaces": [
+        "packages/*"
+    ]
 }

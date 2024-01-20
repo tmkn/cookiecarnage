@@ -1,6 +1,5 @@
 import Fastify, { FastifyInstance, RouteShorthandOptions } from "fastify";
 import { Client } from "undici";
-import { Server, IncomingMessage, ServerResponse } from "http";
 
 import { getMineData } from "miner";
 
