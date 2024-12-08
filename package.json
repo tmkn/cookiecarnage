@@ -8,10 +8,10 @@
     "private": true,
     "dependencies": {},
     "devDependencies": {
-        "nodemon": "^3.0.3",
-        "nx": "17.2.8",
-        "prettier": "^3.2.4",
-        "typescript": "^5.3.3"
+        "nodemon": "^3.1.7",
+        "nx": "20.2.1",
+        "prettier": "^3.4.2",
+        "typescript": "^5.7.2"
     },
     "workspaces": [
         "packages/*"

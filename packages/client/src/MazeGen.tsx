@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Application, Graphics, Text, Container, utils } from "pixi.js";
+import { Application, Graphics, Text, Container } from "pixi.js";
 
 import "./index.css";
 import { IMineData, INode } from "miner";
@@ -12,14 +12,17 @@ export const MazeGen: React.FC = () => {
 
     useEffect(() => {
         if (canvasRef.current) {
-            setApp(
-                new Application({
-                    view: canvasRef.current,
-                    width: window.innerWidth,
-                    height: window.innerHeight,
-                    backgroundColor: 0x1099bb
-                })
-            );
+            const app = new Application();
+
+            app.init({
+                canvas: canvasRef.current,
+                width: window.innerWidth,
+                height: window.innerHeight,
+                backgroundColor: 0x1099bb
+            }).then(() => {
+                console.log("App initialized!");
+                setApp(app);
+            });
 
             // (async () => {
             //     const params = new URLSearchParams({
@@ -56,24 +59,19 @@ export const MazeGen: React.FC = () => {
                 // console.log(node.tagName, depth, i);
                 const container = new Container();
                 // Create a new Graphics object
-                const box = new Graphics();
+                const box = new Graphics().rect(0, 0, 50, 50);
 
                 // Set the fill color and line style of the box
-                box.beginFill(getColor(node.tagName));
-                box.lineStyle(2, 0xffffff);
+                box.fill(getColor(node.tagName));
+                box.setStrokeStyle({ color: 0xffffff, width: 2 });
 
-                // Draw a rectangle
-                box.drawRect(0, 0, 50, 50);
-
-                // End the fill and line styles
-                box.endFill();
                 box.scale.set(1);
 
                 // Add the box to the stage
                 // app.stage.addChild(box);
 
                 // Create a new Text object with some text
-                const text = new Text(node.tagName);
+                const text = new Text({ text: node.tagName });
 
                 // Customize the text object's font and size
                 text.style.fontFamily = "Arial";
@@ -103,10 +101,10 @@ export const MazeGen: React.FC = () => {
             let dragging = false;
             let lastPosition = { x: 0, y: 0 };
 
-            if (app.view.addEventListener) {
-                app.view.addEventListener("mousedown", onMouseDown as any);
-                app.view.addEventListener("mousemove", onMouseMove as any);
-                app.view.addEventListener("mouseup", onMouseUp);
+            if (app.canvas) {
+                app.canvas.addEventListener("mousedown", onMouseDown as any);
+                app.canvas.addEventListener("mousemove", onMouseMove as any);
+                app.canvas.addEventListener("mouseup", onMouseUp);
 
                 function onMouseDown(event: MouseEvent) {
                     console.log(event);

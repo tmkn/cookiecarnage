@@ -15,11 +15,11 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "playwright": "^1.41.1"
+        "playwright": "^1.49.0"
     },
     "devDependencies": {
         "ts-loader": "^9.5.1",
-        "webpack": "^5.89.0",
+        "webpack": "^5.97.1",
         "webpack-cli": "^5.1.4",
         "webpack-node-externals": "^3.0.0"
     }
