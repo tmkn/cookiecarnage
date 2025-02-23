@@ -1,0 +1,24 @@
+{
+    "name": "@domageddon/scraper-dom",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "",
+    "main": "dist/domageddon.js",
+    "scripts": {
+        "build": "webpack --config webpack.config.cjs --progress",
+        "dev": "webpack watch --config webpack.config.cjs --progress",
+        "build:tsc": "tsc",
+        "build:tsc:watch": "tsc --watch",
+        "prettier": "prettier --write \"{src,tests,utility}/**/{*.ts,*.tsx,*.js,*.css}\""
+    },
+    "author": "tmkn",
+    "license": "UNLICENSED",
+    "devDependencies": {
+        "@tooling/tsconfig": "*",
+        "@tooling/vitest": "*",
+        "ts-loader": "^9.5.2",
+        "webpack": "^5.98.0",
+        "webpack-cli": "^6.0.1"
+    },
+    "dependencies": {}
+}

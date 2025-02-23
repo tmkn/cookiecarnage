@@ -28,3 +28,19 @@ This is a very lucrative business model for LeCrev and ensured that they have a 
 
 Trace is a client side framework, but LeCrev has made it a server side framework to further increase their foothold and lock in.
 But unfortunately this has made it easier for the rogue AI to take control of the internet as it can now manipulate the DOM on the server side.
+
+## Development
+
+Run `npm run dev:all` to start watch mode for the server and its source files.
+
+### Test Server
+
+- Run `npm run dev` to start watch mode for the source files (scraper, server, etc)
+- Run `npm run server:dev` to start the server with nodemon, any changes to the source files will restart the server.
+
+### Test Scraper
+
+There is a `playground.ts` file to quickly test the scraper.
+
+- Run `npm run dev` to start watch mode for the source files (scraper, server, etc)
+- Run `npm run scraper:dev` to start the scraper (`playground.ts`) with nodemon, any changes to the associated scraper files will restart the playground file.

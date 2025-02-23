@@ -1,0 +1,28 @@
+{
+    "name": "@domageddon/scraper",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "",
+    "exports": {
+        ".": {
+            "types": "./src/main.ts",
+            "default": "./build/src/main.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc -b",
+        "dev": "tsc -b --watch",
+        "test": "vitest --run",
+        "test:coverage": "vitest --run --coverage",
+        "scraper:dev": "nodemon --watch build/src --watch ../../packages/scraper-dom/dist build/src/playground.js"
+    },
+    "author": "tmkn",
+    "license": "UNLICENSED",
+    "devDependencies": {
+        "@tooling/tsconfig": "*",
+        "@tooling/vitest": "*"
+    },
+    "dependencies": {
+        "playwright": "^1.50.1"
+    }
+}
