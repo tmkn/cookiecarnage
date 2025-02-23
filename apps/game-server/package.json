@@ -1,0 +1,29 @@
+{
+    "name": "@domageddon/game-server",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "",
+    "exports": {
+        ".": {
+            "types": "./src/main.ts",
+            "default": "./build/src/main.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc -b",
+        "dev": "tsc -b --watch",
+        "server:dev": "nodemon --watch build/src --watch ../../packages/scraper/build/src build/src/server.js",
+        "//test": "vitest --run",
+        "//test:coverage": "vitest --run --coverage"
+    },
+    "author": "tmkn",
+    "license": "UNLICENSED",
+    "devDependencies": {
+        "@tooling/tsconfig": "*",
+        "@tooling/vitest": "*"
+    },
+    "dependencies": {
+        "@hono/node-server": "^1.13.8",
+        "hono": "^4.7.2"
+    }
+}
