@@ -36,7 +36,6 @@ Run `npm run dev:all` to start watch mode for the server and its source files.
 ### Test Server
 
 - Run `npm run dev` to start watch mode for the source files (scraper, server, etc)
-- Run `npm run server:dev` to start the server with nodemon, any changes to the source files will restart the server.
 
 ### Test Scraper
 

@@ -1,0 +1,137 @@
+{
+    "url": "http://google.at",
+    "level": {
+        "tag": "body",
+        "rooms": [
+            {
+                "tag": "noscript",
+                "rooms": [],
+                "roomWidth": 2,
+                "roomHeight": 2,
+                "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            {
+                "tag": "div",
+                "rooms": [
+                    {
+                        "tag": "div",
+                        "rooms": [
+                            {
+                                "tag": "div",
+                                "rooms": [],
+                                "roomWidth": 2,
+                                "roomHeight": 2,
+                                "backgroundColor": "rgba(0, 0, 0, 0)"
+                            }
+                        ],
+                        "roomWidth": 3,
+                        "roomHeight": 4,
+                        "backgroundColor": "rgba(0, 0, 0, 0)"
+                    },
+                    {
+                        "tag": "div",
+                        "rooms": [
+                            {
+                                "tag": "div",
+                                "rooms": [],
+                                "roomWidth": 2,
+                                "roomHeight": 2,
+                                "backgroundColor": "rgba(0, 0, 0, 0)"
+                            }
+                        ],
+                        "roomWidth": 4,
+                        "roomHeight": 2,
+                        "backgroundColor": "rgba(0, 0, 0, 0)"
+                    }
+                ],
+                "roomWidth": 2,
+                "roomHeight": 6,
+                "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            {
+                "tag": "div",
+                "rooms": [
+                    {
+                        "tag": "div",
+                        "rooms": [],
+                        "roomWidth": 2,
+                        "roomHeight": 2,
+                        "backgroundColor": "rgba(0, 0, 0, 0)"
+                    },
+                    {
+                        "tag": "div",
+                        "rooms": [
+                            {
+                                "tag": "div",
+                                "rooms": [],
+                                "roomWidth": 2,
+                                "roomHeight": 2,
+                                "backgroundColor": "rgba(0, 0, 0, 0.6)"
+                            },
+                            {
+                                "tag": "div",
+                                "rooms": [],
+                                "roomWidth": 2,
+                                "roomHeight": 2,
+                                "backgroundColor": "rgba(0, 0, 0, 0)"
+                            },
+                            {
+                                "tag": "div",
+                                "rooms": [
+                                    {
+                                        "tag": "div",
+                                        "rooms": [],
+                                        "roomWidth": 2,
+                                        "roomHeight": 2,
+                                        "backgroundColor": "rgba(0, 0, 0, 0)"
+                                    }
+                                ],
+                                "roomWidth": 2,
+                                "roomHeight": 2,
+                                "backgroundColor": "rgba(0, 0, 0, 0)"
+                            }
+                        ],
+                        "roomWidth": 2,
+                        "roomHeight": 3,
+                        "backgroundColor": "rgba(0, 0, 0, 0)"
+                    },
+                    {
+                        "tag": "div",
+                        "rooms": [
+                            {
+                                "tag": "div",
+                                "rooms": [],
+                                "roomWidth": 2,
+                                "roomHeight": 2,
+                                "backgroundColor": "rgba(0, 0, 0, 0)"
+                            }
+                        ],
+                        "roomWidth": 2,
+                        "roomHeight": 2,
+                        "backgroundColor": "rgba(0, 0, 0, 0)"
+                    },
+                    {
+                        "tag": "div",
+                        "rooms": [],
+                        "roomWidth": 2,
+                        "roomHeight": 2,
+                        "backgroundColor": "rgba(0, 0, 0, 0)"
+                    }
+                ],
+                "roomWidth": 2,
+                "roomHeight": 9,
+                "backgroundColor": "rgba(0, 0, 0, 0)"
+            },
+            {
+                "tag": "div",
+                "rooms": [],
+                "roomWidth": 2,
+                "roomHeight": 2,
+                "backgroundColor": "rgba(0, 0, 0, 0)"
+            }
+        ],
+        "roomWidth": 2,
+        "roomHeight": 14,
+        "backgroundColor": "rgb(255, 255, 255)"
+    }
+}

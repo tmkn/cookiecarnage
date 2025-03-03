@@ -12,9 +12,6 @@
         },
         "test": {},
         "test:coverage": {},
-        "server:dev": {
-            "cache": false
-        },
         "scraper:dev": {}
     }
 }

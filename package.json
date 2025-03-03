@@ -12,19 +12,18 @@
         "prettier": "prettier --write \"**/*.{ts,tsx,md}\"",
         "build": "turbo build",
         "dev": "turbo watch dev",
-        "server:dev": "turbo server:dev",
         "scraper:dev": "turbo scraper:dev",
         "dev:all": "turbo run dev server:dev --parallel",
         "turbo": "turbo"
     },
     "dependencies": {},
     "devDependencies": {
-        "@types/node": "^20.12.13",
-        "prettier": "^3.4.2",
-        "turbo": "^2.4.4",
-        "typescript": "^5.8.2",
+        "@types/node": "^20.14.0",
+        "prettier": "^3.5.3",
+        "turbo": "^2.5.0",
+        "typescript": "^5.8.3",
         "nodemon": "^3.1.9",
-        "vitest": "^3.0.7"
+        "vitest": "^3.1.1"
     },
     "packageManager": "npm@10.5.0",
     "workspaces": [
