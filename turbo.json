@@ -12,6 +12,7 @@
         },
         "test": {},
         "test:coverage": {},
-        "scraper:dev": {}
+        "scraper:dev": {},
+        "website:dev": {}
     }
 }

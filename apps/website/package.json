@@ -1,0 +1,17 @@
+{
+    "name": "@domageddon/website",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "website:dev": "astro dev",
+        "website:build": "astro build",
+        "website:preview": "astro preview",
+        "astro": "astro"
+    },
+    "dependencies": {
+        "@tailwindcss/vite": "^4.3.3",
+        "astro": "^7.2.7",
+        "tailwindcss": "^4.3.3"
+    }
+}

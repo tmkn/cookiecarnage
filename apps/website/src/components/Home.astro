@@ -1,0 +1,68 @@
+---
+
+---
+
+<div class="flex font-mono p-4">
+    <span id="text" class="text-slate-800"></span>
+    <span id="cursor" class="translate-x-1 translate-y-4"></span>
+</div>
+
+<script>
+    const lines: string[] = [
+        "You can't kill what you can't garbage collect",
+        "DOMicide in progress...",
+        "404: Enemy not found",
+        "There's no escape from callback hell"
+    ];
+
+    const text = lines[Math.floor(Math.random() * lines.length)];
+    const animatedText = document.getElementById("text")!;
+    const cursor = document.getElementById("cursor")!;
+    let index = 0;
+
+    function printCharacter() {
+        if (index < text.length) {
+            const span = document.createElement("span");
+            span.textContent = text.charAt(index);
+            span.classList.add("fade-in");
+            animatedText.appendChild(span);
+            index++;
+            setTimeout(printCharacter, 50);
+        } else {
+            cursor.classList.add("blinking-cursor");
+        }
+    }
+
+    printCharacter();
+</script>
+
+<style is:global>
+    .fade-in {
+        opacity: 0;
+        animation: fadeIn 0.15s ease-in forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .blinking-cursor {
+        display: inline-block;
+        width: 10px;
+        height: 0.1rem;
+        background-color: transparent;
+        animation: blink 1s step-start infinite;
+    }
+
+    @keyframes blink {
+        50% {
+            background-color: #cad5e2;
+        }
+    }
+</style>
