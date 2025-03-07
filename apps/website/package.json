@@ -1,0 +1,15 @@
+{
+    "name": "@domageddon/website",
+    "private": true,
+    "type": "module",
+    "version": "0.0.1",
+    "scripts": {
+        "website:dev": "astro dev",
+        "website:build": "astro build",
+        "website:preview": "astro preview",
+        "astro": "astro"
+    },
+    "dependencies": {
+        "astro": "^5.4.2"
+    }
+}

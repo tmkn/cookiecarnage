@@ -15,6 +15,7 @@
         "server:dev": "turbo server:dev",
         "scraper:dev": "turbo scraper:dev",
         "dev:all": "turbo run dev server:dev --parallel",
+        "website:dev": "turbo run website:dev",
         "turbo": "turbo"
     },
     "dependencies": {},

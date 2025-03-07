@@ -15,6 +15,7 @@
         "server:dev": {
             "cache": false
         },
-        "scraper:dev": {}
+        "scraper:dev": {},
+        "website:dev": {}
     }
 }
