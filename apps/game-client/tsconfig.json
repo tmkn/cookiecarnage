@@ -1,0 +1,17 @@
+{
+    "extends": "@tooling/tsconfig/strict.tsconfig.json",
+    "compilerOptions": {
+        "rootDir": ".",
+        "outDir": "build",
+        "lib": ["DOM"]
+    },
+    "include": [],
+    "references": [
+        {
+            "path": "./src"
+        }
+        // {
+        //     "path": "./tests"
+        // }
+    ]
+}

@@ -1,4 +1,6 @@
 {
+    "name": "@domageddon/game-server",
+    "version": "1.0.0",
     "private": true,
     "author": "tmkn",
     "license": "UNLICENSED",
