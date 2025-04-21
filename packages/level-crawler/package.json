@@ -1,5 +1,5 @@
 {
-    "name": "@domageddon/scraper",
+    "name": "@domageddon/level-crawler",
     "version": "1.0.0",
     "type": "module",
     "description": "",
@@ -14,7 +14,7 @@
         "dev": "tsc -b --watch",
         "test": "vitest --run",
         "test:coverage": "vitest --run --coverage",
-        "scraper:dev": "nodemon --watch build/src --watch ../../packages/scraper-dom/dist build/src/playground.js"
+        "scraper:dev": "nodemon --watch build/src --watch ../../packages/level-crawler-dom/dist build/src/playground.js"
     },
     "author": "tmkn",
     "license": "UNLICENSED",

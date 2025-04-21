@@ -33,7 +33,15 @@ export async function scrapeWebsite(url: string): Promise<IScraperResponse> {
 function getScraperFile(): string {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
-    const filePath = path.join(__dirname, "..", "..", "..", "scraper-dom", "dist", "domageddon.js");
+    const filePath = path.join(
+        __dirname,
+        "..",
+        "..",
+        "..",
+        "level-crawler-dom",
+        "dist",
+        "domageddon.js"
+    );
 
     if (!fs.existsSync(filePath)) {
         throw new Error(`Scraper file not found: ${filePath}`);
