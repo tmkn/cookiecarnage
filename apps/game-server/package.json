@@ -1,29 +1,17 @@
 {
-    "name": "@domageddon/game-server",
-    "version": "1.0.0",
-    "type": "module",
-    "description": "",
-    "exports": {
-        ".": {
-            "types": "./src/main.ts",
-            "default": "./build/src/main.js"
-        }
-    },
-    "scripts": {
-        "build": "tsc -b",
-        "dev": "tsc -b --watch",
-        "server:dev": "nodemon --watch build/src --watch ../../packages/scraper/build/src build/src/server.js",
-        "//test": "vitest --run",
-        "//test:coverage": "vitest --run --coverage"
-    },
+    "private": true,
     "author": "tmkn",
     "license": "UNLICENSED",
-    "devDependencies": {
-        "@tooling/tsconfig": "*",
-        "@tooling/vitest": "*"
+    "scripts": {
+        "build": "nitro build",
+        "dev": "nitro dev",
+        "prepare": "nitro prepare",
+        "preview": "node .output/server/index.mjs"
     },
     "dependencies": {
-        "@hono/node-server": "^1.13.8",
-        "hono": "^4.7.2"
+        "@domageddon/scraper": "*"
+    },
+    "devDependencies": {
+        "nitropack": "latest"
     }
 }
