@@ -1,16 +1,4 @@
+// https://nitro.unjs.io/guide/typescript
 {
-    "extends": "@tooling/tsconfig/strict.tsconfig.json",
-    "compilerOptions": {
-        "rootDir": ".",
-        "outDir": "build"
-    },
-    "include": [],
-    "references": [
-        {
-            "path": "./src"
-        }
-        // {
-        //     "path": "./tests"
-        // }
-    ]
+  "extends": "./.nitro/types/tsconfig.json"
 }
