@@ -1,5 +1,5 @@
 {
-    "name": "@domageddon/scraper-dom",
+    "name": "@domageddon/level-crawler-dom",
     "version": "1.0.0",
     "type": "module",
     "description": "",
