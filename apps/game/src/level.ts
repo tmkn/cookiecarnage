@@ -1,8 +1,8 @@
-import { Application, Graphics, Container } from "pixi.js";
+import { Graphics, Container } from "pixi.js";
 
-import { createRNG } from "./rng.js";
+import { Theme } from "./theme.js";
 
-interface ILevelResponseRoom {
+export interface ILevelResponseRoom {
     tag: string;
     roomWidth: number;
     roomHeight: number;
@@ -15,7 +15,7 @@ export interface ILevelResponse {
     level: ILevelResponseRoom;
 }
 
-interface IRoom {
+export interface IRoom {
     x: number;
     y: number;
     width: number;
@@ -23,7 +23,7 @@ interface IRoom {
     tag: string;
 }
 
-function createRoom(pos: Vec2D, room: ILevelResponseRoom): IRoom {
+export function createRoom(pos: Vec2D, room: ILevelResponseRoom): IRoom {
     return {
         x: pos.x,
         y: pos.y,
@@ -33,9 +33,9 @@ function createRoom(pos: Vec2D, room: ILevelResponseRoom): IRoom {
     };
 }
 
-type Vec2D = { x: number; y: number };
+export type Vec2D = { x: number; y: number };
 
-const directions: Vec2D[] = [
+export const directions: Vec2D[] = [
     // up
     { x: 0, y: -1 },
     // down
@@ -46,74 +46,21 @@ const directions: Vec2D[] = [
     { x: 1, y: 0 }
 ];
 
-interface IQueue {
+export interface IQueue {
     room: ILevelResponseRoom;
     parent?: IRoom;
+    parentId?: number;
 }
 
-export function generateFloorLayout(url: string, level: ILevelResponseRoom, size: number): IRoom[] {
-    const rooms: IRoom[] = [];
-    const rng = createRNG(url);
-    const tileTracker = new TileTracker(size);
-
-    const queue: IQueue[] = [{ room: level }];
-    const rootRom = createRoom({ x: 0, y: 0 }, level);
-    tileTracker.placeRoom(rootRom);
-    rooms.push(rootRom);
-
-    while (queue.length > 0) {
-        let { room, parent } = queue.shift()!;
-
-        for (const connectedRoom of room.rooms) {
-            let couldPlaceRoom = false;
-            const randomDirection = [...directions].sort(() => rng.nextInRange(-1, 1));
-
-            for (const dir of randomDirection) {
-                const offset = rng.nextInRange(10, 30);
-                let x = (parent?.x ?? 0) + dir.x * offset;
-                let y = (parent?.y ?? 0) + dir.y * offset;
-
-                const possibleRoom = createRoom({ x, y }, connectedRoom);
-
-                if (!tileTracker.canPlaceRoom(possibleRoom)) {
-                    continue;
-                } else {
-                    tileTracker.placeRoom(possibleRoom);
-
-                    queue.push({ room: connectedRoom, parent: possibleRoom });
-                    rooms.push(possibleRoom);
-                    couldPlaceRoom = true;
-                    break;
-                }
-            }
-
-            if (!couldPlaceRoom) {
-                throw new Error(`Couldn't place room: ${connectedRoom.tag}`);
-            }
-        }
-    }
-
-    console.log(rooms);
-
-    const bb = tileTracker.getBB();
-    console.log(`Bounding box: ${JSON.stringify(bb, null, 4)}`);
-
-    return rooms;
-}
-
-export function drawRoom(app: Application, rooms: IRoom[], offset: number): void {
+export function drawRoom(
+    container: Container,
+    rooms: IRoom[],
+    offset: number,
+    overlayContainer: Container,
+    updateOverlayFn: (content: string, x: number, y: number) => void
+): void {
     const scale = 8;
-    console.log(rooms);
-
-    const container = new Container({
-        x: app.screen.width / 2,
-        y: app.screen.height / 2
-    });
-
-    // container.x -= offset;
-    // container.y -= offset;
-
-    app.stage.addChild(container);
+    // console.log(rooms);
 
     for (const room of rooms) {
         const x = room.x * scale;
@@ -124,105 +71,70 @@ export function drawRoom(app: Application, rooms: IRoom[], offset: number): void
 
         const obj = new Graphics()
             .rect(x, y, width, height)
-            .fill(0xffffff)
-            .stroke({ color: 0x000000, width: Math.floor(scale / 4) });
+            .fill(Theme.surface0)
+            .stroke({ color: Theme.blue, width: Math.floor(scale / 4) });
+
+        obj.eventMode = "static";
+
+        obj.on("pointerover", event => {
+            // Information to display - customize this string
+            const roomInfo = `Room: ${room.tag} Size: ${room.width}x${room.height}`;
+
+            // Get mouse position in global space
+            const pointerPos = event.global;
+            // Convert to the coordinate system of the overlay's parent (usually the stage)
+            const localPos = overlayContainer.parent.toLocal(pointerPos); // More robust way
+
+            // Update and show the overlay
+            updateOverlayFn(roomInfo, localPos.x, localPos.y);
+
+            // Optional: Add a visual highlight to the room itself
+            obj.tint = 0xffff00; // Example: Tint yellow on hover
+        });
+
+        obj.on("pointerout", () => {
+            // Hide the overlay
+            overlayContainer.visible = false;
+
+            // Optional: Remove visual highlight
+            obj.tint = 0xffffff; // Reset tint
+        });
+
+        obj.on("pointermove", event => {
+            // Update overlay position to follow the mouse while hovering over the room
+            if (overlayContainer.visible) {
+                const pointerPos = event.global;
+                const localPos = overlayContainer.parent.toLocal(pointerPos);
+                overlayContainer.position.set(localPos.x + 15, localPos.y + 15); // Keep updating position
+            }
+        });
 
         container.addChild(obj);
     }
 }
 
-class TileTracker {
-    private _tiles: boolean[][];
-    // allow negative values
-    private _offset: number;
+export function drawHallways(container: Container, hallways: Vec2D[][]): void {
+    const scale = 8;
 
-    constructor(private _size: number) {
-        this._tiles = Array.from({ length: this._size }, () => Array(this._size).fill(false));
-        this._offset = Math.floor(this._size / 2);
-    }
+    // const container = new Container({
+    //     x: app.screen.width / 2,
+    //     y: app.screen.height / 2
+    // });
 
-    placeRoom(room: IRoom): void {
-        const startX = room.x + this._offset;
-        const startY = room.y + this._offset;
+    // app.stage.addChild(container);
 
-        for (let y = 0; y < room.height; y++) {
-            for (let x = 0; x < room.width; x++) {
-                const tileX = startX + x;
-                const tileY = startY + y;
+    for (const hallway of hallways) {
+        const randomColor = Math.floor(Math.random() * 16777215);
 
-                if (this._isWithinBounds(tileX) && this._isWithinBounds(tileY)) {
-                    this._tiles[tileY]![tileX] = true;
-                }
-            }
+        for (const hallwayTile of hallway) {
+            // todo dynamically add offset
+            const x = (hallwayTile.x - 2048) * scale;
+            const y = (hallwayTile.y - 2048) * scale;
+
+            const obj = new Graphics().rect(x, y, scale, scale).fill(Theme.lavender);
+            // .stroke({ color: 0xff0000, width: Math.floor(scale / 4) });
+
+            container.addChild(obj);
         }
-    }
-
-    // check if we can place a room at a given position
-    // we can't place a room if a tile was already placed by another room
-    canPlaceRoom(room: IRoom): boolean {
-        const startX = room.x + this._offset;
-        const startY = room.y + this._offset;
-
-        for (let y = 0; y < room.height; y++) {
-            for (let x = 0; x < room.width; x++) {
-                const tileX = startX + x;
-                const tileY = startY + y;
-
-                if (this._tiles[tileY]![tileX]) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    getBB(): { from: Vec2D; to: Vec2D } | null {
-        let minRow = Infinity;
-        let minCol = Infinity;
-        let maxRow = -Infinity;
-        let maxCol = -Infinity;
-
-        for (let row = 0; row < this._size; row++) {
-            for (let col = 0; col < this._size; col++) {
-                if (this._tiles[row]![col]) {
-                    minRow = Math.min(minRow, row);
-                    minCol = Math.min(minCol, col);
-                    maxRow = Math.max(maxRow, row);
-                    maxCol = Math.max(maxCol, col);
-                }
-            }
-        }
-
-        if (minRow === Infinity) {
-            return null;
-        }
-
-        // return {
-        //     from: { x: minCol, y: minRow },
-        //     to: { x: maxCol, y: maxRow }
-        // };
-
-        return {
-            from: { x: minCol - this._offset, y: minRow - this._offset },
-            to: { x: maxCol - this._offset, y: maxRow - this._offset }
-        };
-    }
-
-    // since it's a square, we only need one function
-    private _isWithinBounds(xOrY: number): boolean {
-        // const withinBounds = xOrY >= -this._offset && xOrY < this._offset;
-        const withinBounds = xOrY >= 0 && xOrY < this._size;
-
-        if (!withinBounds) {
-            // throw new Error(
-            //     `Out of bounds: ${xOrY} -> ${xOrY + this._offset} | size: ${this._size}x${this._size}`
-            // );
-            console.log(
-                `Out of bounds: ${xOrY} -> ${xOrY + this._offset} | size: ${this._size}x${this._size} | offset ${this._offset}`
-            );
-        }
-
-        return true;
     }
 }
