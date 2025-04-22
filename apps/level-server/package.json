@@ -11,7 +11,7 @@
         "preview": "node .output/server/index.mjs"
     },
     "dependencies": {
-        "@domageddon/scraper": "*"
+        "@domageddon/level-crawler": "*"
     },
     "devDependencies": {
         "nitropack": "latest"

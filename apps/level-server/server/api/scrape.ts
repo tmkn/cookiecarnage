@@ -1,4 +1,4 @@
-import { scrapeWebsite } from "@domageddon/scraper";
+import { scrapeWebsite } from "@domageddon/level-crawler";
 
 export default defineEventHandler(async event => {
     const { url = "https://google.com" } = getQuery(event);
@@ -6,7 +6,7 @@ export default defineEventHandler(async event => {
     if (!url || typeof url !== "string")
         throw createError({
             status: 500,
-            statusMessage: "url parameter is missing"
+            message: "url parameter is missing"
         });
 
     try {
@@ -16,7 +16,7 @@ export default defineEventHandler(async event => {
     } catch (error) {
         throw createError({
             status: 500,
-            statusMessage: error
+            message: error.toString()
         });
     }
 });

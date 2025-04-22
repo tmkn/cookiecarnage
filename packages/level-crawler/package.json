@@ -23,6 +23,7 @@
         "@tooling/vitest": "*"
     },
     "dependencies": {
-        "playwright": "^1.51.1"
+        "playwright": "^1.52.0",
+        "@domageddon/level-crawler-dom": "*"
     }
 }
