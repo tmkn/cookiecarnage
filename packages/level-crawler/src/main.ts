@@ -1,8 +1,9 @@
-import * as path from "path";
+import { createRequire } from "node:module";
 import * as fs from "fs";
-import { fileURLToPath } from "url";
 
 import { chromium, type Page } from "playwright";
+
+const require = createRequire(import.meta.url);
 
 interface IScraperResponse {
     url: string;
@@ -31,17 +32,7 @@ export async function scrapeWebsite(url: string): Promise<IScraperResponse> {
 }
 
 function getScraperFile(): string {
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = path.dirname(__filename);
-    const filePath = path.join(
-        __dirname,
-        "..",
-        "..",
-        "..",
-        "level-crawler-dom",
-        "dist",
-        "domageddon.js"
-    );
+    const filePath = require.resolve("@domageddon/level-crawler-dom");
 
     if (!fs.existsSync(filePath)) {
         throw new Error(`Scraper file not found: ${filePath}`);
