@@ -1,8 +1,10 @@
 {
     "name": "@domageddon/level-crawler",
     "version": "1.0.0",
-    "type": "module",
     "description": "",
+    "license": "UNLICENSED",
+    "author": "tmkn",
+    "type": "module",
     "exports": {
         ".": {
             "types": "./src/main.ts",
@@ -16,14 +18,12 @@
         "test:coverage": "vitest --run --coverage",
         "scraper:dev": "nodemon --watch build/src --watch ../../packages/level-crawler-dom/dist build/src/playground.js"
     },
-    "author": "tmkn",
-    "license": "UNLICENSED",
+    "dependencies": {
+        "@domageddon/level-crawler-dom": "*",
+        "playwright": "^1.62.1"
+    },
     "devDependencies": {
         "@tooling/tsconfig": "*",
         "@tooling/vitest": "*"
-    },
-    "dependencies": {
-        "playwright": "^1.52.0",
-        "@domageddon/level-crawler-dom": "*"
     }
 }

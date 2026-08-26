@@ -2,8 +2,8 @@
     "name": "@domageddon/level-server",
     "version": "1.0.0",
     "private": true,
-    "author": "tmkn",
     "license": "UNLICENSED",
+    "author": "tmkn",
     "scripts": {
         "build": "nitro build",
         "dev": "nitro dev",
@@ -14,6 +14,6 @@
         "@domageddon/level-crawler": "*"
     },
     "devDependencies": {
-        "nitropack": "latest"
+        "nitropack": "2.13.4"
     }
 }
