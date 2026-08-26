@@ -1,34 +1,33 @@
 {
     "name": "cookiecarnage",
-    "private": true,
     "version": "1.0.0",
-    "author": "tmkn",
-    "license": "UNLICENSED",
+    "private": true,
     "description": "",
+    "license": "UNLICENSED",
+    "author": "tmkn",
+    "workspaces": [
+        "apps/*",
+        "packages/*",
+        "tooling/*"
+    ],
     "main": "index.js",
     "scripts": {
         "test": "turbo test",
         "test:coverage": "turbo test:coverage",
-        "prettier": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "format": "oxfmt",
         "build": "turbo build",
         "dev": "turbo watch dev",
         "scraper:dev": "turbo scraper:dev",
         "dev:all": "turbo run dev server:dev --parallel",
         "turbo": "turbo"
     },
-    "dependencies": {},
     "devDependencies": {
         "@types/node": "^20.14.0",
-        "prettier": "^3.5.3",
-        "turbo": "^2.5.0",
+        "nodemon": "^3.1.14",
+        "oxfmt": "^0.65.0",
+        "turbo": "^2.10.12",
         "typescript": "^5.8.3",
-        "nodemon": "^3.1.9",
-        "vitest": "^3.1.1"
+        "vitest": "^4.1.11"
     },
-    "packageManager": "npm@10.5.0",
-    "workspaces": [
-        "apps/*",
-        "packages/*",
-        "tooling/*"
-    ]
+    "packageManager": "npm@10.5.0"
 }

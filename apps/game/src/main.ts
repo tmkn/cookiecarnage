@@ -1,7 +1,7 @@
 import { Application, Text } from "pixi.js";
 
-import levelData from "./simple-level.json" with { type: "json" };
 import { drawRoom, generateFloorLayout } from "./level.js";
+import levelData from "./simple-level.json" with { type: "json" };
 
 const app = new Application();
 

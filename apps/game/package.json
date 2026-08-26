@@ -1,23 +1,23 @@
 {
     "name": "@domageddon/game",
     "version": "1.0.0",
-    "type": "module",
     "description": "",
+    "license": "UNLICENSED",
+    "author": "tmkn",
+    "type": "module",
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
         "//test": "vitest --run",
         "//test:coverage": "vitest --run --coverage"
     },
-    "author": "tmkn",
-    "license": "UNLICENSED",
+    "dependencies": {
+        "pixi.js": "^8.20.0"
+    },
     "devDependencies": {
         "@tooling/tsconfig": "*",
         "@tooling/vitest": "*",
-        "@vitejs/plugin-react": "^4.3.4",
-        "vite": "^6.2.0"
-    },
-    "dependencies": {
-        "pixi.js": "^8.8.1"
+        "@vitejs/plugin-react": "^6.1.0",
+        "vite": "^8.2.2"
     }
 }

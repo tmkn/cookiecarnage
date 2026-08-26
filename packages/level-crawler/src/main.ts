@@ -1,5 +1,5 @@
-import { createRequire } from "node:module";
 import * as fs from "fs";
+import { createRequire } from "node:module";
 
 import { chromium, type Page } from "playwright";
 

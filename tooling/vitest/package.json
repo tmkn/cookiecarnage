@@ -2,7 +2,7 @@
     "name": "@tooling/vitest",
     "version": "1.0.0",
     "description": "",
-    "scripts": {},
+    "license": "ISC",
     "author": "",
-    "license": "ISC"
+    "scripts": {}
 }
