@@ -16,5 +16,6 @@
     "sortPackageJson": true,
     "ignorePatterns": [],
     "sortImports": true,
-    "embeddedLanguageFormatting": "auto"
+    "embeddedLanguageFormatting": "auto",
+    "sortTailwindcss": true
 }
