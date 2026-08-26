@@ -1,5 +1,5 @@
 {
-    "name": "@domageddon/level-server",
+    "name": "@domageddon/level-generator",
     "version": "1.0.0",
     "private": true,
     "license": "UNLICENSED",
@@ -11,7 +11,7 @@
         "preview": "node .output/server/index.mjs"
     },
     "dependencies": {
-        "@domageddon/level-crawler": "*"
+        "@domageddon/site-crawler": "*"
     },
     "devDependencies": {
         "nitropack": "2.13.4"
