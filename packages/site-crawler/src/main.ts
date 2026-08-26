@@ -32,7 +32,7 @@ export async function scrapeWebsite(url: string): Promise<IScraperResponse> {
 }
 
 function getScraperFile(): string {
-    const filePath = require.resolve("@domageddon/dom-extractor");
+    const filePath = require.resolve("@domageddon/dom-extractor/inject");
 
     if (!fs.existsSync(filePath)) {
         throw new Error(`Scraper file not found: ${filePath}`);
