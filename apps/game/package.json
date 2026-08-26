@@ -6,17 +6,19 @@
     "author": "tmkn",
     "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "tsc && vite build",
         "//test": "vitest --run",
-        "//test:coverage": "vitest --run --coverage"
+        "//test:coverage": "vitest --run --coverage",
+        "build": "tsc --build --noEmit && vite build",
+        "dev": "vite",
+        "typecheck": "tsc --build --noEmit",
+        "typecheck:watch": "tsc --build --noEmit --watch"
     },
     "dependencies": {
         "pixi.js": "^8.20.0"
     },
     "devDependencies": {
-        "@tooling/tsconfig": "*",
-        "@tooling/vitest": "*",
+        "@tooling/tsconfig": "workspace:*",
+        "@tooling/vitest": "workspace:*",
         "@vitejs/plugin-react": "^6.1.0",
         "vite": "^8.2.2"
     }

@@ -13,7 +13,9 @@
     "trailingComma": "none",
     "useTabs": false,
     "printWidth": 100,
-    "sortPackageJson": true,
+    "sortPackageJson": {
+        "sortScripts": true
+    },
     "ignorePatterns": [],
     "sortImports": true,
     "embeddedLanguageFormatting": "auto",

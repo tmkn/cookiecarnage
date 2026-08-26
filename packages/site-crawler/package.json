@@ -12,18 +12,20 @@
         }
     },
     "scripts": {
-        "build": "tsc -b",
-        "dev": "tsc -b --watch",
+        "build": "tsc --build",
+        "dev": "tsc --build --watch",
+        "scraper:dev": "nodemon --watch build/src --watch ../../packages/dom-extractor/dist build/src/playground.js",
         "test": "vitest --run",
         "test:coverage": "vitest --run --coverage",
-        "scraper:dev": "nodemon --watch build/src --watch ../../packages/dom-extractor/dist build/src/playground.js"
+        "typecheck": "tsc --build --noEmit",
+        "typecheck:watch": "tsc --build --noEmit --watch"
     },
     "dependencies": {
-        "@domageddon/dom-extractor": "*",
+        "@domageddon/dom-extractor": "workspace:*",
         "playwright": "^1.62.1"
     },
     "devDependencies": {
-        "@tooling/tsconfig": "*",
-        "@tooling/vitest": "*"
+        "@tooling/tsconfig": "workspace:*",
+        "@tooling/vitest": "workspace:*"
     }
 }
