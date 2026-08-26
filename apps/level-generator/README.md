@@ -1,4 +1,4 @@
-# Domageddon - Level Server
+# Domageddon - Level Generator
 
 ## About
 

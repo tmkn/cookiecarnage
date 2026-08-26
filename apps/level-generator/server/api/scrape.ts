@@ -1,4 +1,4 @@
-import { scrapeWebsite } from "@domageddon/level-crawler";
+import { scrapeWebsite } from "@domageddon/site-crawler";
 
 export default defineEventHandler(async event => {
     const { url = "https://google.com" } = getQuery(event);
