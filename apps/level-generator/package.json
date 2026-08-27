@@ -11,7 +11,7 @@
         "preview": "node .output/server/index.mjs"
     },
     "dependencies": {
-        "@domageddon/site-crawler": "*"
+        "@domageddon/site-crawler": "workspace:*"
     },
     "devDependencies": {
         "nitropack": "2.13.4"

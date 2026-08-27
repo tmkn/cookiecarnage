@@ -10,6 +10,13 @@
             "cache": false,
             "persistent": true
         },
+        "typecheck": {
+            "outputs": ["build/**"]
+        },
+        "typecheck:watch": {
+            "cache": false,
+            "persistent": true
+        },
         "test": {},
         "test:coverage": {},
         "scraper:dev": {},

@@ -11,13 +11,15 @@
     },
     "scripts": {
         "build": "tsdown",
+        "build:tsc": "tsc --build",
+        "build:tsc:watch": "tsc --build --watch",
         "dev": "tsdown --watch",
-        "build:tsc": "tsc",
-        "build:tsc:watch": "tsc --watch"
+        "typecheck": "tsc --build --noEmit",
+        "typecheck:watch": "tsc --build --noEmit --watch"
     },
     "devDependencies": {
-        "@tooling/tsconfig": "*",
-        "@tooling/vitest": "*",
+        "@tooling/tsconfig": "workspace:*",
+        "@tooling/vitest": "workspace:*",
         "tsdown": "^0.22.14"
     }
 }

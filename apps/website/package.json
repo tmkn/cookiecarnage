@@ -4,10 +4,10 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "website:dev": "astro dev",
+        "astro": "astro",
         "website:build": "astro build",
-        "website:preview": "astro preview",
-        "astro": "astro"
+        "website:dev": "astro dev",
+        "website:preview": "astro preview"
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.3.3",

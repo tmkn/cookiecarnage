@@ -83,6 +83,7 @@ export function drawRoom(
             // Get mouse position in global space
             const pointerPos = event.global;
             // Convert to the coordinate system of the overlay's parent (usually the stage)
+            if (!overlayContainer.parent) throw new Error(`Expected parent to not be null!`);
             const localPos = overlayContainer.parent.toLocal(pointerPos); // More robust way
 
             // Update and show the overlay
@@ -104,6 +105,7 @@ export function drawRoom(
             // Update overlay position to follow the mouse while hovering over the room
             if (overlayContainer.visible) {
                 const pointerPos = event.global;
+                if (!overlayContainer.parent) throw new Error(`Expected parent to not be null!`);
                 const localPos = overlayContainer.parent.toLocal(pointerPos);
                 overlayContainer.position.set(localPos.x + 15, localPos.y + 15); // Keep updating position
             }
