@@ -10,8 +10,8 @@
         "//test:coverage": "vitest --run --coverage",
         "build": "tsc --build --noEmit && vite build",
         "dev": "vite",
-        "typecheck": "tsc --build --noEmit",
-        "typecheck:watch": "tsc --build --noEmit --watch"
+        "typecheck": "tsc --build",
+        "typecheck:watch": "tsc --build --watch"
     },
     "dependencies": {
         "pixi.js": "^8.20.0"

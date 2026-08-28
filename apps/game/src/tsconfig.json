@@ -1,7 +1,8 @@
 {
     "extends": "..",
     "compilerOptions": {
-        "composite": true
+        "composite": true,
+        "lib": ["DOM", "ESNext"]
         // "noUncheckedIndexedAccess": true
     },
     "include": ["./**/*.ts", "./**/*.json"]

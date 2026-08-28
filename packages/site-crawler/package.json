@@ -17,8 +17,8 @@
         "scraper:dev": "nodemon --watch build/src --watch ../../packages/dom-extractor/dist build/src/playground.js",
         "test": "vitest --run",
         "test:coverage": "vitest --run --coverage",
-        "typecheck": "tsc --build --noEmit",
-        "typecheck:watch": "tsc --build --noEmit --watch"
+        "typecheck": "tsc --build",
+        "typecheck:watch": "tsc --build --watch"
     },
     "dependencies": {
         "@domageddon/dom-extractor": "workspace:*",
