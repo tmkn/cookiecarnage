@@ -14,8 +14,8 @@
         "build:tsc": "tsc --build",
         "build:tsc:watch": "tsc --build --watch",
         "dev": "tsdown --watch",
-        "typecheck": "tsc --build --noEmit",
-        "typecheck:watch": "tsc --build --noEmit --watch"
+        "typecheck": "tsc --build",
+        "typecheck:watch": "tsc --build --watch"
     },
     "devDependencies": {
         "@tooling/tsconfig": "workspace:*",
