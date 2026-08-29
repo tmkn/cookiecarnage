@@ -1,0 +1,17 @@
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#game,
+#ui {
+  position: fixed;
+  inset: 0;
+}
+
+#ui {
+  pointer-events: none;
+}

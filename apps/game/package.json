@@ -14,11 +14,17 @@
         "typecheck:watch": "tsc --build --watch"
     },
     "dependencies": {
-        "pixi.js": "^8.20.0"
+        "@babylonjs/core": "^9.23.0",
+        "@babylonjs/loaders": "^9.23.0",
+        "pixi.js": "^8.20.0",
+        "react": "^19.2.8",
+        "react-dom": "^19.2.8"
     },
     "devDependencies": {
         "@tooling/tsconfig": "workspace:*",
         "@tooling/vitest": "workspace:*",
+        "@types/react": "^19.2.18",
+        "@types/react-dom": "^19.2.5",
         "@vitejs/plugin-react": "^6.1.0",
         "vite": "^8.2.2"
     }

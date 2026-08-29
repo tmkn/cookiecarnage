@@ -1,9 +1,15 @@
+import { resolve } from "node:path";
+
+import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-// import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    // plugins: [react()],
+    plugins: [react()],
+    input: {
+        main: resolve(import.meta.dirname, "index.html"),
+        sandbox: resolve(import.meta.dirname, "sandbox/index.html")
+    },
     server: {
         port: 3000,
         proxy: {
