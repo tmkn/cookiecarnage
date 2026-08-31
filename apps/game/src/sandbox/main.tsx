@@ -9,10 +9,14 @@ import {
     Scene,
     Vector3
 } from "@babylonjs/core";
+import { registerBuiltInLoaders } from "@babylonjs/loaders";
 import type { FC } from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
 
-import { createLighting, createLevel } from "./sandbox-level-helper";
+import { pistolDefinition } from "../weapons/pistol-definition.js";
+import { WeaponManager } from "../weapons/weapon-manager.js";
+import { createLighting, createLevel } from "./sandbox-level-helper.js";
 
 export class Game {
     private readonly engine: Engine;
@@ -61,6 +65,8 @@ export class Game {
     private readonly bobSideAmplitude = 0.045;
     private readonly tiltMax = 0.04;
     private readonly tiltSpeed = 8;
+
+    private weaponManager: WeaponManager;
 
     private readonly onKeyDown = (event: KeyboardEvent): void => {
         if (document.pointerLockElement !== this.canvas) {
@@ -112,6 +118,7 @@ export class Game {
 
         container.appendChild(this.canvas);
 
+        registerBuiltInLoaders();
         this.engine = new Engine(this.canvas, true);
         this.scene = new Scene(this.engine);
         this.scene.collisionsEnabled = true;
@@ -154,6 +161,11 @@ export class Game {
         this.canvas.addEventListener("click", this.onCanvasClick);
 
         this.updateGroundState();
+
+        this.weaponManager = new WeaponManager(this.scene, this.camera);
+        this.weaponManager.addWeapon(pistolDefinition).then(() => {
+            this.weaponManager.equip("pistol");
+        });
     }
 
     start(): void {

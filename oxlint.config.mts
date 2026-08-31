@@ -13,8 +13,5 @@ export default defineConfig({
     plugins: ["typescript"],
     rules: {
         "typescript/explicit-function-return-type": "error"
-    },
-    options: {
-        typeAware: true
     }
 });

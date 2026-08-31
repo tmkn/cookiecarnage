@@ -1,9 +1,10 @@
 {
     "extends": "..",
     "compilerOptions": {
+        "jsx": "react",
         "composite": true,
         "lib": ["DOM", "ESNext"]
         // "noUncheckedIndexedAccess": true
     },
-    "include": ["./**/*.ts", "./**/*.json"]
+    "include": ["./**/*.ts", "./**/*.tsx", "./**/*.json"]
 }
