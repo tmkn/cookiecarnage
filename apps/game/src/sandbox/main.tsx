@@ -7,9 +7,13 @@ import {
     MeshBuilder,
     Ray,
     Scene,
-    Vector3
+    Vector3,
+    AnimationGroup,
+    TransformNode,
+    ImportMeshAsync
 } from "@babylonjs/core";
 import type { FC } from "react";
+import "@babylonjs/loaders/glTF";
 import { createRoot } from "react-dom/client";
 
 import { createLighting, createLevel } from "./sandbox-level-helper";
@@ -62,6 +66,10 @@ export class Game {
     private readonly tiltMax = 0.04;
     private readonly tiltSpeed = 8;
 
+    private weaponRoot?: TransformNode;
+    private weaponAnimations: AnimationGroup[] = [];
+    private muzzle?: TransformNode;
+
     private readonly onKeyDown = (event: KeyboardEvent): void => {
         if (document.pointerLockElement !== this.canvas) {
             return;
@@ -78,6 +86,58 @@ export class Game {
             this.keys.add(event.code);
         }
     };
+
+    private async loadWeapon(): Promise<void> {
+        const result = await ImportMeshAsync("/assets/weapons/pistol.glb", this.scene);
+
+        this.weaponRoot = new TransformNode("weaponRoot", this.scene);
+
+        this.weaponRoot.parent = this.camera;
+
+        // Babylon camera-local coordinates:
+        // +X right, +Y up, +Z forward.
+        this.weaponRoot.position = new Vector3(0.28, -0.25, 0.65);
+
+        for (const mesh of result.meshes) {
+            if (!mesh.parent) {
+                mesh.parent = this.weaponRoot;
+            }
+
+            mesh.isPickable = false;
+            mesh.checkCollisions = false;
+            mesh.scaling = new Vector3(0.25, 0.25, 0.25);
+        }
+
+        this.weaponAnimations = result.animationGroups;
+
+        this.muzzle = result.transformNodes.find(node => node.name === "Muzzle");
+
+        this.playWeaponAnimation("Idle", true);
+    }
+
+    private playWeaponAnimation(name: string, loop = false): void {
+        const animation = this.weaponAnimations.find(group => group.name === name);
+
+        if (!animation) {
+            console.warn(`Missing weapon animation: ${name}`);
+            return;
+        }
+
+        animation.stop();
+        animation.start(loop);
+    }
+
+    private fireWeapon(): void {
+        this.playWeaponAnimation("Fire");
+
+        const ray = this.camera.getForwardRay(1000);
+
+        const hit = this.scene.pickWithRay(ray, mesh => mesh.isPickable);
+
+        if (hit?.hit) {
+            console.log("Hit:", hit.pickedMesh?.name);
+        }
+    }
 
     private readonly onKeyUp = (event: KeyboardEvent): void => {
         this.keys.delete(event.code);
@@ -154,6 +214,8 @@ export class Game {
         this.canvas.addEventListener("click", this.onCanvasClick);
 
         this.updateGroundState();
+
+        void this.loadWeapon();
     }
 
     start(): void {
