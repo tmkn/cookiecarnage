@@ -62,7 +62,7 @@ export class Game {
     private readonly tiltMax = 0.04;
     private readonly tiltSpeed = 8;
 
-    private readonly onKeyDown = (event: KeyboardEvent) => {
+    private readonly onKeyDown = (event: KeyboardEvent): void => {
         if (document.pointerLockElement !== this.canvas) {
             return;
         }
@@ -79,27 +79,27 @@ export class Game {
         }
     };
 
-    private readonly onKeyUp = (event: KeyboardEvent) => {
+    private readonly onKeyUp = (event: KeyboardEvent): void => {
         this.keys.delete(event.code);
     };
 
-    private readonly onWindowBlur = () => {
+    private readonly onWindowBlur = (): void => {
         this.keys.clear();
     };
 
-    private readonly onPointerLockChange = () => {
+    private readonly onPointerLockChange = (): void => {
         if (document.pointerLockElement !== this.canvas) {
             this.keys.clear();
         }
     };
 
-    private readonly onCanvasClick = () => {
+    private readonly onCanvasClick = (): void => {
         if (document.pointerLockElement !== this.canvas) {
             void this.canvas.requestPointerLock();
         }
     };
 
-    private readonly onResize = () => {
+    private readonly onResize = (): void => {
         this.engine.resize();
     };
 
@@ -154,11 +154,11 @@ export class Game {
         this.updateGroundState();
     }
 
-    private createLighting() {
+    private createLighting(): void {
         new HemisphericLight("light", new Vector3(0, 1, 0), this.scene);
     }
 
-    private createFloor() {
+    private createFloor(): void {
         const floor = MeshBuilder.CreateGround("floor", { width: 100, height: 100 }, this.scene);
 
         floor.checkCollisions = true;
@@ -204,7 +204,7 @@ export class Game {
         floor.material = material;
     }
 
-    start() {
+    start(): void {
         this.engine.runRenderLoop(() => {
             const frameTime = Math.min(this.engine.getDeltaTime() / 1000, 0.1);
 
@@ -223,7 +223,7 @@ export class Game {
         });
     }
 
-    private updatePhysics(deltaTime: number) {
+    private updatePhysics(deltaTime: number): void {
         this.updateGroundState();
 
         const wasGrounded = this.grounded;
@@ -274,7 +274,7 @@ export class Game {
         }
     }
 
-    private resolveBlockedVelocity(requested: Vector3, actual: Vector3) {
+    private resolveBlockedVelocity(requested: Vector3, actual: Vector3): void {
         if (Math.abs(actual.y - requested.y) > 0.001) {
             this.velocity.y = 0;
         }
@@ -294,7 +294,7 @@ export class Game {
         }
     }
 
-    private getWishDirection() {
+    private getWishDirection(): Vector3 {
         const yaw = this.camera.rotation.y;
 
         // Movement comes only from yaw, so visual roll and pitch cannot
@@ -328,7 +328,7 @@ export class Game {
         return wishDirection;
     }
 
-    private movePlayer(displacement: Vector3, canStep: boolean) {
+    private movePlayer(displacement: Vector3, canStep: boolean): Vector3 {
         const start = this.playerCollider.position.clone();
 
         this.playerCollider.moveWithCollisions(displacement);
@@ -376,12 +376,12 @@ export class Game {
         return directMovement;
     }
 
-    private setColliderPosition(position: Vector3) {
+    private setColliderPosition(position: Vector3): void {
         this.playerCollider.position.copyFrom(position);
         this.playerCollider.computeWorldMatrix(true);
     }
 
-    private updateGroundState() {
+    private updateGroundState(): void {
         this.playerPosition.copyFrom(this.playerCollider.position);
 
         const ray = new Ray(
@@ -429,7 +429,7 @@ export class Game {
         wishSpeed: number,
         acceleration: number,
         deltaTime: number
-    ) {
+    ): void {
         const currentSpeed = Vector3.Dot(this.velocity, direction);
 
         const addSpeed = wishSpeed - currentSpeed;
@@ -443,7 +443,7 @@ export class Game {
         this.velocity.addInPlace(direction.scale(accelerationSpeed));
     }
 
-    private applyFriction(deltaTime: number) {
+    private applyFriction(deltaTime: number): void {
         const speed = Math.hypot(this.velocity.x, this.velocity.z);
 
         if (speed < 0.05) {
@@ -467,14 +467,14 @@ export class Game {
         this.velocity.z *= scale;
     }
 
-    private startLandingEffect(fallSpeed: number) {
+    private startLandingEffect(fallSpeed: number): void {
         const impact = Math.min(Math.max((-fallSpeed - 4) * 0.012, 0), 0.12);
 
         this.landingOffset -= impact;
         this.landingVelocity = 0;
     }
 
-    private applyViewEffects(deltaTime: number) {
+    private applyViewEffects(deltaTime: number): void {
         const horizontalSpeed = Math.hypot(this.velocity.x, this.velocity.z);
 
         const targetBobAmount =
@@ -526,7 +526,7 @@ export class Game {
         this.camera.rotation.z = this.tiltAngle;
     }
 
-    destroy() {
+    destroy(): void {
         this.keys.clear();
 
         window.removeEventListener("keydown", this.onKeyDown);

@@ -154,7 +154,7 @@ const overlayText = new Text({ text: "", style: overlayTextStyle });
 overlayText.position.set(5, 5); // Small padding inside the background
 overlayContainer.addChild(overlayText);
 
-function updateOverlay(content: string, x: number, y: number) {
+function updateOverlay(content: string, x: number, y: number): void {
     overlayText.text = content;
 
     // Adjust background size based on text bounds

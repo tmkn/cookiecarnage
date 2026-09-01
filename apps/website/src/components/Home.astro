@@ -20,7 +20,7 @@
     const cursor = document.getElementById("cursor")!;
     let index = 0;
 
-    function printCharacter() {
+    function printCharacter(): void {
         if (index < text.length) {
             const span = document.createElement("span");
             span.textContent = text.charAt(index);
