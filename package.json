@@ -11,6 +11,7 @@
         "dev": "turbo watch dev",
         "dev:all": "turbo run dev server:dev --parallel",
         "format": "oxfmt",
+        "lint": "oxlint",
         "scraper:dev": "turbo scraper:dev",
         "test": "turbo test",
         "test:coverage": "turbo test:coverage",
@@ -23,6 +24,7 @@
         "@types/node": "^20.14.0",
         "nodemon": "^3.1.14",
         "oxfmt": "^0.65.0",
+        "oxlint": "^1.80.0",
         "turbo": "^2.10.12",
         "typescript": "^6.0.3",
         "vitest": "^4.1.11"
