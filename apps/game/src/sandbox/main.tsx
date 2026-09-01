@@ -1,19 +1,18 @@
 import {
     Color3,
-    DynamicTexture,
+    Color4,
     Engine,
     FreeCamera,
-    HemisphericLight,
     Mesh,
     MeshBuilder,
     Ray,
     Scene,
-    StandardMaterial,
-    Texture,
     Vector3
 } from "@babylonjs/core";
 import type { FC } from "react";
 import { createRoot } from "react-dom/client";
+
+import { createLighting, createLevel } from "./sandbox-level-helper";
 
 export class Game {
     private readonly engine: Engine;
@@ -115,6 +114,8 @@ export class Game {
         this.engine = new Engine(this.canvas, true);
         this.scene = new Scene(this.engine);
         this.scene.collisionsEnabled = true;
+        this.scene.clearColor = new Color4(0.32, 0.39, 0.43, 1);
+        this.scene.ambientColor = new Color3(0.25, 0.27, 0.28);
 
         this.camera = new FreeCamera("playerCamera", this.playerPosition.clone(), this.scene);
 
@@ -139,8 +140,8 @@ export class Game {
         this.playerCollider.isPickable = false;
         this.playerCollider.checkCollisions = false;
 
-        this.createLighting();
-        this.createFloor();
+        createLighting(this.scene);
+        createLevel(this.scene);
 
         window.addEventListener("keydown", this.onKeyDown);
         window.addEventListener("keyup", this.onKeyUp);
@@ -152,56 +153,6 @@ export class Game {
         this.canvas.addEventListener("click", this.onCanvasClick);
 
         this.updateGroundState();
-    }
-
-    private createLighting(): void {
-        new HemisphericLight("light", new Vector3(0, 1, 0), this.scene);
-    }
-
-    private createFloor(): void {
-        const floor = MeshBuilder.CreateGround("floor", { width: 100, height: 100 }, this.scene);
-
-        floor.checkCollisions = true;
-        floor.isPickable = true;
-
-        const texture = new DynamicTexture("floorTexture", { width: 512, height: 512 }, this.scene);
-
-        const context = texture.getContext();
-
-        context.fillStyle = "#f44336";
-        context.fillRect(0, 0, 512, 512);
-
-        context.strokeStyle = "#555555";
-        context.lineWidth = 2;
-
-        const gridSize = 32;
-
-        for (let x = 0; x <= 512; x += gridSize) {
-            context.beginPath();
-            context.moveTo(x, 0);
-            context.lineTo(x, 512);
-            context.stroke();
-        }
-
-        for (let y = 0; y <= 512; y += gridSize) {
-            context.beginPath();
-            context.moveTo(0, y);
-            context.lineTo(512, y);
-            context.stroke();
-        }
-
-        texture.update();
-        texture.wrapU = Texture.WRAP_ADDRESSMODE;
-        texture.wrapV = Texture.WRAP_ADDRESSMODE;
-        texture.uScale = 5;
-        texture.vScale = 5;
-
-        const material = new StandardMaterial("floorMaterial", this.scene);
-
-        material.diffuseTexture = texture;
-        material.diffuseColor = Color3.White();
-
-        floor.material = material;
     }
 
     start(): void {
@@ -562,10 +513,11 @@ game.start();
 const App: FC<{ game: Game }> = ({ game }) => {
     return <>hello world</>;
 };
+
 const uiContainer = document.getElementById("ui");
 
 if (!uiContainer) {
     throw new Error('Missing element with id "ui".');
 }
 
-createRoot(uiContainer).render(<App />);
+createRoot(uiContainer).render(<App game={game} />);
