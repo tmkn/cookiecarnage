@@ -54,6 +54,7 @@ export class Game {
 
     private landingOffset = 0;
     private landingVelocity = 0;
+    private stepViewOffset = 0;
 
     private readonly bobFrequency = 1.8;
     private readonly bobAmplitude = 0.12;
@@ -213,7 +214,19 @@ export class Game {
         }
 
         const requestedMovement = this.velocity.scale(deltaTime);
-        const actualMovement = this.movePlayer(requestedMovement, wasGrounded);
+
+        if (this.grounded) {
+            // Keep the requested horizontal heading, but make the displacement tangent to the
+            // ground. Otherwise a horizontal move points into a slope, causing collision response
+            // to steer sideways and occasionally mistake the slope for a step.
+            requestedMovement.y =
+                -(
+                    this.groundNormal.x * requestedMovement.x +
+                    this.groundNormal.z * requestedMovement.z
+                ) / this.groundNormal.y;
+        }
+
+        const actualMovement = this.movePlayer(requestedMovement, this.grounded);
 
         this.resolveBlockedVelocity(requestedMovement, actualMovement);
 
@@ -320,6 +333,7 @@ export class Game {
         const steppedHorizontalDistance = Math.hypot(steppedMovement.x, steppedMovement.z);
 
         if (steppedHorizontalDistance > directHorizontalDistance + 0.001) {
+            this.stepViewOffset -= Math.max(steppedMovement.y, 0);
             return steppedMovement;
         }
 
@@ -460,12 +474,18 @@ export class Game {
             this.landingVelocity = 0;
         }
 
+        this.stepViewOffset *= Math.exp(-18 * deltaTime);
+
+        if (Math.abs(this.stepViewOffset) < 0.0001) {
+            this.stepViewOffset = 0;
+        }
+
         const yaw = this.camera.rotation.y;
         const right = new Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
 
         this.camera.position.copyFrom(this.playerPosition);
         this.camera.position.addInPlace(right.scale(sideBob));
-        this.camera.position.y += verticalBob + this.landingOffset;
+        this.camera.position.y += verticalBob + this.landingOffset + this.stepViewOffset;
 
         const sideSpeed = Vector3.Dot(this.velocity, right);
 
